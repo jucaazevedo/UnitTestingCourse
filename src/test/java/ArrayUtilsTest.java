@@ -1,11 +1,11 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
 
-import exceptions.ExcecaoDeListaVazia;
+import Excecoes.ExcecaoDeListaVazia;
 
 public class ArrayUtilsTest {
 
@@ -110,16 +110,43 @@ public class ArrayUtilsTest {
 	}
 
 	@Test
-	public void deveRetornar2QuandoAListaTiverSequenciaDe1A3(){
-		List<Integer> lista = Arrays.asList(1,2,3);
+	public void deveRetornar2QuandoAListaTiverSequenciaDe1A3() throws ExcecaoDeListaVazia{
+		List<Double> lista = Arrays.asList(1.0,2.0,3.0);
 		double mediana = ArrayUtils.mediana(lista);
 		assertEquals(2.0, mediana, 0.0001);
 	}
 
 	@Test
-	public void deveRetornar2QuandoAListaTiverSequenciaDe1A4(){
-		List<Integer> lista = Arrays.asList(1,2,3,4);
+	public void deveRetornar25QuandoAListaTiverSequenciaDe1A4() throws ExcecaoDeListaVazia{
+		List<Double> lista = Arrays.asList(1.0,2.0,3.0,4.0);
 		double mediana = ArrayUtils.mediana(lista);
 		assertEquals(2.5, mediana, 0.00001); // O terceiro parâmetro do método assertEquals é a tolerância permitida para a comparação.
 	}
+
+	@Test
+	public void deveRetornarMedianaQuandoAListaDeTamanhoParTiverNumerosFracionados() throws ExcecaoDeListaVazia{
+		List<Double> lista = Arrays.asList(1.5,2.5,3.5,4.5);
+		double mediana = ArrayUtils.mediana(lista);
+		assertEquals(3.0, mediana, 0.00001);
+	}
+
+	@Test
+	public void deveRetornarMedianaQuandoAListaDeTamanhoImparTiverNumerosFracionados() throws ExcecaoDeListaVazia{
+		List<Double> lista = Arrays.asList(1.5,3.5,4.5);
+		double mediana = ArrayUtils.mediana(lista);
+		assertEquals(3.5, mediana, 0.00001);
+	}
+
+	@Test(expected = ExcecaoDeListaVazia.class)
+	public void medianaDeveRetornarExcecaoDeListaVaziaQuandoListaForNula() throws ExcecaoDeListaVazia {
+		Double mediana = ArrayUtils.mediana(null);
+	}
+
+	@Test
+	public void medianaDeveRetornarListaVaziaQuandoListaForNula() throws ExcecaoDeListaVazia {
+		List<Double> lista = Arrays.asList(2.5,null,3.5,4.5);
+		double mediana = ArrayUtils.mediana(lista);
+		assertEquals(3.5, mediana, 0.00001);
+	}
+
 }
