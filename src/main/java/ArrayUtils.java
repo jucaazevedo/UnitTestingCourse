@@ -1,7 +1,8 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import exceptions.ExcecaoDeListaVazia;
+import Excecoes.ExcecaoDeListaVazia;
 
 public class ArrayUtils {
 
@@ -38,14 +39,22 @@ public class ArrayUtils {
 		return sum / lista.size();
 	}
 
-	public static double mediana(List<Integer> lista) {
-		List<Integer> listaOrdenada = lista.stream().sorted().collect(Collectors.toList());
-		boolean eImpar = lista.size() % 2 == 1;
-		int indiceDoMeio = (lista.size() / 2);
+	public static double mediana(List<Double> lista) throws ExcecaoDeListaVazia {
+		if (lista == null || lista.isEmpty()) throw new ExcecaoDeListaVazia("Lista não pode estar vazia");
+		List<Double> listaFinal = new ArrayList<Double>();
+		for (Double double1 : lista) {
+			if(double1 != null){
+				listaFinal.add(double1);
+			}
+		}
+
+		List<Double> listaOrdenada = listaFinal.stream().sorted().collect(Collectors.toList());
+		boolean eImpar = listaFinal.size() % 2 == 1;
+		int indiceDoMeio = (listaFinal.size() / 2);
 		if (eImpar) {
 			return listaOrdenada.get(indiceDoMeio);
 		}
-		int indiceDoMeio2 = (lista.size() / 2) -1;
+		int indiceDoMeio2 = (listaFinal.size() / 2) -1;
 		double resultado = (listaOrdenada.get(indiceDoMeio) + listaOrdenada.get(indiceDoMeio2).doubleValue()) / 2;
 		return resultado;
 	}
